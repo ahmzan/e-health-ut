@@ -19,27 +19,27 @@ const Navbar = () => {
           <h1 className='text-2xl font-bold text-blue-800'>E-Health</h1>
           <ul className={cssMobile + ' ' + cssDesktop} id='mobileMenu'>
             <li>
-              <a href='#home' className='text-gray-600 hover:text-blue-800 transition duration-300'>
+              <a href='/#home' className='text-gray-600 hover:text-blue-800 transition duration-300'>
                 Beranda
               </a>
             </li>
             <li>
-              <a href='#artikel' className='text-gray-600 hover:text-blue-800 transition duration-300'>
+              <a href='/#artikel' className='text-gray-600 hover:text-blue-800 transition duration-300'>
                 Artikel
               </a>
             </li>
             <li>
-              <a href='#kategori' className='text-gray-600 hover:text-blue-800 transition duration-300'>
+              <a href='/#kategori' className='text-gray-600 hover:text-blue-800 transition duration-300'>
                 Kategori
               </a>
             </li>
             <li>
-              <a href='#tentang' className='text-gray-600 hover:text-blue-800 transition duration-300'>
+              <a href='/#tentang' className='text-gray-600 hover:text-blue-800 transition duration-300'>
                 Tentang
               </a>
             </li>
             <li>
-              <a href='#kontak' className='text-gray-600 hover:text-blue-800 transition duration-300'>
+              <a href='/#kontak' className='text-gray-600 hover:text-blue-800 transition duration-300'>
                 Kontak
               </a>
             </li>
