@@ -37,8 +37,8 @@ export default function ArtikelPage() {
 
       <div id='a' className='pt-16' data-aos='fade-up' data-aos-delay='300'>
         <img src={imageUrl} alt={title} className='w-full h-96 object-cover' />
-        <div className='container mx-auto space-y-8 py-6'>
-          <h1 className='text-4xl font-extrabold tracking-tight text-balance'>{title}</h1>
+        <div className='container mx-auto space-y-8 py-6 px-4'>
+          <h1 className='text-4xl font-extrabold text-balance'>{title}</h1>
           <p className='indent-8 leading-relaxed text-justify'>{content}</p>
         </div>
       </div>
