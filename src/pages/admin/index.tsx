@@ -1,7 +1,8 @@
-import { AuthState } from '@/hooks/auth-state'
+import { useAuthState } from '@/hooks/use-auth-state'
+import AdminLayout from './layout'
 
 export default function AdminPage() {
-  const authState = AuthState()
+  const { user } = useAuthState()
 
-  return <div>admin {JSON.stringify(authState?.email)}</div>
+  return <AdminLayout>Selamat datang, {user?.email}</AdminLayout>
 }
