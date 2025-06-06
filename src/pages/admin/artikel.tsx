@@ -24,6 +24,7 @@ export interface ArtikelData {
   id: string
   title: string
   content: string
+  category: string[]
   imageUrl: string
 }
 
@@ -82,7 +83,7 @@ export default function AdminArtikelPage() {
                   {artikel.content.length > 50 ? artikel.content.substring(0, 50) + '...' : artikel.content}
                 </p>
               </TableCell>
-              <TableCell>Kesehatan, Olahraga</TableCell>
+              <TableCell>{artikel.category ? artikel.category.join(', ') : '-'}</TableCell>
               <TableCell>
                 <Button size='sm' onClick={() => navigate('/admin/artikel-edit?key=' + artikel.key)}>
                   Edit

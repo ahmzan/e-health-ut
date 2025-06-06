@@ -11,8 +11,11 @@ import { database } from '@/lib/firebase'
 import { onValue, ref, update } from 'firebase/database'
 import { useNavigate, useSearchParams } from 'react-router'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Check, Plus } from 'lucide-react'
 import type { ArtikelData } from './artikel'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
+import type { KategoriData } from './kategori'
 
 export default function AdminArtikelTambahPage() {
   const navigate = useNavigate()
@@ -24,11 +27,14 @@ export default function AdminArtikelTambahPage() {
   // const [id, setId] = useStatxe<string>()
   const [title, setTitle] = useState<string>()
   const [content, setContent] = useState<string>()
-  // const [category, setCategory] = useState<string[]>()
+  const [category, setCategory] = useState<string[]>([])
   // const [author, setAuthor] = useState<string>()
   const [imageUrl, setImageUrl] = useState<string>()
 
   const [error, setError] = useState<string>()
+
+  const [kategoriOpen, setKategoriOpen] = useState<boolean>(false)
+  const [kategories, setKategories] = useState<KategoriData[]>([])
 
   const onSubmit = useCallback(
     (ev: FormEvent<HTMLFormElement>) => {
@@ -38,7 +44,7 @@ export default function AdminArtikelTambahPage() {
 
       const refArtikel = ref(database, 'artikels/' + keyArtikel)
 
-      update(refArtikel, { title, content, imageUrl })
+      update(refArtikel, { title, content, imageUrl, category })
         .then(() => navigate('/admin/artikel'))
         .catch(err => {
           console.log('err', err)
@@ -46,7 +52,7 @@ export default function AdminArtikelTambahPage() {
           if (err.message) setError(err.message)
         })
     },
-    [content, imageUrl, keyArtikel, navigate, title]
+    [category, content, imageUrl, keyArtikel, navigate, title]
   )
 
   useEffect(() => {
@@ -54,6 +60,23 @@ export default function AdminArtikelTambahPage() {
     if (key) setKeyArtikel(key)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const refKategories = ref(database, 'kategories')
+
+    const unsub = onValue(refKategories, snapKategories => {
+      const dataKategories: KategoriData[] = []
+
+      snapKategories.forEach(snapKategori => {
+        const data = snapKategori.val() as KategoriData
+        dataKategories.push({ ...data, key: snapKategori.key })
+      })
+
+      setKategories(dataKategories)
+    })
+
+    return () => unsub()
   }, [])
 
   useEffect(() => {
@@ -66,6 +89,7 @@ export default function AdminArtikelTambahPage() {
       setTitle(data.title)
       setContent(data.content)
       setImageUrl(data.imageUrl)
+      setCategory(data.category ?? [])
     })
 
     return () => unsub()
@@ -97,6 +121,7 @@ export default function AdminArtikelTambahPage() {
             placeholder='Judul Artikel'
             value={title}
             onChange={e => setTitle(e.target.value)}
+            autoComplete='off'
           />
         </div>
 
@@ -108,6 +133,7 @@ export default function AdminArtikelTambahPage() {
             rows={10}
             value={content}
             onChange={e => setContent(e.target.value)}
+            autoComplete='off'
           />
         </div>
 
@@ -121,6 +147,57 @@ export default function AdminArtikelTambahPage() {
             onChange={e => setImageUrl(e.target.value)}
             autoComplete='off'
           />
+        </div>
+
+        <div className='grid w-full items-center gap-3'>
+          <Label>Kategori</Label>
+
+          <div className='flex w-full flex-col items-start justify-between rounded-md border px-4 py-3 sm:flex-row sm:items-center'>
+            <p className='text-sm leading-none font-medium'>
+              {category.map(cat => (
+                <span key={cat} className='bg-primary text-primary-foreground mr-2 rounded-lg px-2 py-1 text-xs'>
+                  {cat}
+                </span>
+              ))}
+            </p>
+
+            <Popover open={kategoriOpen} onOpenChange={setKategoriOpen}>
+              <PopoverTrigger asChild>
+                <Button variant='ghost'>
+                  <Plus />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className='p-0'>
+                <Command>
+                  <CommandInput placeholder='Kategori' autoFocus className='h-9' />
+                  <CommandList>
+                    <CommandEmpty>Tidak ada kategori tersebut</CommandEmpty>
+                    <CommandGroup>
+                      {kategories.map(kategori => (
+                        <CommandItem
+                          key={kategori.id}
+                          value={kategori.name}
+                          onSelect={value => {
+                            if (category.includes(value)) {
+                              // Deselect
+
+                              setCategory(category.filter(value => value !== kategori.name))
+                            } else {
+                              // Select
+                              setCategory([...category, value])
+                            }
+                          }}
+                        >
+                          {kategori.name}
+                          {category.includes(kategori.name) && <Check className='ml-auto' />}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
 
         <Button type='submit'>Ubah</Button>
