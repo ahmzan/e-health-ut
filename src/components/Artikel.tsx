@@ -2,9 +2,12 @@ import { database } from '@/lib/firebase'
 import { type ArtikelData } from '@/pages/admin/artikel'
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router'
 
 const Artikel = () => {
   const [artikels, setArtikels] = useState<ArtikelData[]>([])
+
+  const [search] = useSearchParams()
 
   useEffect(() => {
     const refArtikels = ref(database, 'artikels')
@@ -17,11 +20,17 @@ const Artikel = () => {
         dataArtikels.push({ ...data, key: snapArtikel.key })
       })
 
-      setArtikels(dataArtikels)
-      console.log(dataArtikels)
+      const kategori = search.get('kategori')
+
+      if (kategori) {
+        setArtikels(dataArtikels.filter(artikel => artikel.category.includes(kategori)))
+      } else {
+        setArtikels(dataArtikels)
+      }
     })
 
     return () => unsub()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -30,6 +39,11 @@ const Artikel = () => {
         Artikel Kesehatan
       </h3>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+        {artikels.length === 0 && (
+          <p className='col-span-full text-center' data-aos='fade-up' data-aos-delay='300'>
+            Tidak ada artikel
+          </p>
+        )}
         {artikels.map(artikel => (
           <div
             key={artikel.id}
