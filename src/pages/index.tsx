@@ -3,7 +3,6 @@ import Hero from '@/components/Hero'
 import Artikel from '@/components/Artikel'
 import Kategori from '@/components/Kategori'
 import About from '@/components/About'
-import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
 import AOS from 'aos'
@@ -22,7 +21,6 @@ function HomePage() {
       <Artikel />
       <Kategori />
       <About />
-      <Contact />
       <Footer />
     </div>
   )
