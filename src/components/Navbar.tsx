@@ -38,11 +38,6 @@ const Navbar = () => {
                 Tentang
               </a>
             </li>
-            <li>
-              <a href='/#kontak' className='text-gray-600 hover:text-blue-800 transition duration-300'>
-                Kontak
-              </a>
-            </li>
           </ul>
 
           <button className='md:hidden' id='mobileMenuButton' onClick={toggleMenu}>
