@@ -10,7 +10,7 @@ const Artikel = () => {
   const [search] = useSearchParams()
 
   useEffect(() => {
-    const refArtikels = ref(database, 'artikels')
+    const refArtikels = ref(database, 'Article')
 
     const unsub = onValue(refArtikels, snapArtikels => {
       const dataArtikels: ArtikelData[] = []

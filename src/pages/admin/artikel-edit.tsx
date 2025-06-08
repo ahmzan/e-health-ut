@@ -42,7 +42,7 @@ export default function AdminArtikelTambahPage() {
 
       console.log('submit', title, content, imageUrl)
 
-      const refArtikel = ref(database, 'artikels/' + keyArtikel)
+      const refArtikel = ref(database, 'Article/' + keyArtikel)
 
       update(refArtikel, { title, content, imageUrl, category })
         .then(() => navigate('/admin/artikel'))
@@ -63,7 +63,7 @@ export default function AdminArtikelTambahPage() {
   }, [])
 
   useEffect(() => {
-    const refKategories = ref(database, 'kategories')
+    const refKategories = ref(database, 'Category')
 
     const unsub = onValue(refKategories, snapKategories => {
       const dataKategories: KategoriData[] = []
@@ -80,7 +80,7 @@ export default function AdminArtikelTambahPage() {
   }, [])
 
   useEffect(() => {
-    const refArtikel = ref(database, 'artikels/' + keyArtikel)
+    const refArtikel = ref(database, 'Article/' + keyArtikel)
 
     const unsub = onValue(refArtikel, snap => {
       const data = snap.val() as ArtikelData

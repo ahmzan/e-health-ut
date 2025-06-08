@@ -35,7 +35,7 @@ export default function AdminArtikelPage() {
 
   const [artikels, setArtikels] = useState<ArtikelData[]>([])
 
-  const refArtikels = ref(database, 'artikels')
+  const refArtikels = ref(database, 'Article')
 
   useEffect(() => {
     const unsub = onValue(refArtikels, snapArtikels => {
@@ -105,7 +105,7 @@ export default function AdminArtikelPage() {
                       <AlertDialogCancel>Batal</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => {
-                          const refArtikel = ref(database, 'artikels/' + artikel.key)
+                          const refArtikel = ref(database, 'Article/' + artikel.key)
 
                           remove(refArtikel).then(() => navigate('/admin/artikel'))
                         }}

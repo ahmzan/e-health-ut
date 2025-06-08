@@ -29,7 +29,7 @@ export default function AdminKategoriTambahPage() {
 
       const uuid = crypto.randomUUID()
 
-      const refKategories = ref(database, 'kategories')
+      const refKategories = ref(database, 'Category')
 
       const refNewKategories = push(refKategories)
 

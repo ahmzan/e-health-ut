@@ -32,7 +32,7 @@ export default function AdminKategoriPage() {
 
   const [kategories, setKategories] = useState<KategoriData[]>([])
 
-  const refKategories = ref(database, 'kategories')
+  const refKategories = ref(database, 'Category')
 
   useEffect(() => {
     const unsub = onValue(refKategories, snapKategories => {
@@ -91,7 +91,7 @@ export default function AdminKategoriPage() {
                       <AlertDialogCancel>Batal</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => {
-                          const refArtikel = ref(database, 'kategories/' + artikel.key)
+                          const refArtikel = ref(database, 'Category/' + artikel.key)
 
                           remove(refArtikel).then(() => navigate('/admin/kategori'))
                         }}

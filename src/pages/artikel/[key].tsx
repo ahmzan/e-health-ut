@@ -19,7 +19,7 @@ export default function ArtikelPage() {
     const key = params.key
     if (!key) return
 
-    const refArtikel = ref(database, 'artikels/' + key)
+    const refArtikel = ref(database, 'Article/' + key)
 
     onValue(refArtikel, snap => {
       const data = snap.val() as ArtikelData

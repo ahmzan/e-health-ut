@@ -7,7 +7,7 @@ const Kategori = () => {
   const [kategories, setKategories] = useState<KategoriData[]>([])
 
   useEffect(() => {
-    const refKategories = ref(database, 'kategories')
+    const refKategories = ref(database, 'Category')
 
     const unsub = onValue(refKategories, snapKategories => {
       const dataKategories: KategoriData[] = []

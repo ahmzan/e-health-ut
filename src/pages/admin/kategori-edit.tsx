@@ -31,7 +31,7 @@ export default function AdminKategoriEditPage() {
 
       console.log('submit', name)
 
-      const refArtikel = ref(database, 'kategories/' + keyKategori)
+      const refArtikel = ref(database, 'Category/' + keyKategori)
 
       update(refArtikel, { name })
         .then(() => navigate('/admin/kategori'))
@@ -52,7 +52,7 @@ export default function AdminKategoriEditPage() {
   }, [])
 
   useEffect(() => {
-    const refKategori = ref(database, 'kategories/' + keyKategori)
+    const refKategori = ref(database, 'Category/' + keyKategori)
 
     const unsub = onValue(refKategori, snap => {
       const data = snap.val() as KategoriData

@@ -40,7 +40,7 @@ export default function AdminArtikelTambahPage() {
 
       const uuid = crypto.randomUUID()
 
-      const refArtikels = ref(database, 'artikels')
+      const refArtikels = ref(database, 'Article')
 
       const refNewArtikel = push(refArtikels)
 
@@ -56,7 +56,7 @@ export default function AdminArtikelTambahPage() {
   )
 
   useEffect(() => {
-    const refKategories = ref(database, 'kategories')
+    const refKategories = ref(database, 'Category')
 
     const unsub = onValue(refKategories, snapKategories => {
       const dataKategories: KategoriData[] = []
